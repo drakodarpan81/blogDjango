@@ -70,7 +70,30 @@
                     </div>
                 </div>
             </div>
+
+            {% block barra_busqueda %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 search">
+                            <form method="GET">
+                                <div id="custom-search-input">
+                                    <div class="input-group col-md-12">
+                                        <input type="text" class="form-control" placeholder="Buscar..." name="buscar" value="{{ request.GET.buscar }}">
+                                        <span class="input-group-list">
+                                            <button type="submit" class="boton btn-success">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                Buscar</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endblock barra_busqueda %}
         </header>
+
+
         <!-- Main Content-->
         {% block contenido %}
             <div class="container px-4 px-lg-5">
@@ -106,8 +129,26 @@
                         <hr
                         class="my-4"/>
                         <!-- Pager-->
-                        <div class="d-flex justify-content-end mb-4">
-                            <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-left">
+
+                                {% if posts.has_previous %}
+                                    <div class="clearfix">
+                                        <a href="?page={{ posts.previous_page_number }}{% if request.GET.buscar %}&q={{ request.GET.buscar }}{% endif %}" class="btn btn-primary float-left">Anterior</a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-right">
+
+                                {% if posts.has_next %}
+                                    <div class="clearfix">
+                                        <a href="?page={{ posts.next_page_number }}{% if request.GET.buscar %}&q={{ request.GET.buscar }}{% endif %}" class="btn btn-primary float-right ">Siguiente</a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
                         </div>
                     </div>
                 </div>
